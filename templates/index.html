@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CRUD with Flask</title>
+</head>
+<body>
+    <h1>Item List</h1>
+
+    <!-- Form untuk tambah item -->
+    <form action="/create" method="post">
+        <input type="text" name="name" placeholder="Item Name" required>
+        <input type="text" name="description" placeholder="Description">
+        <button type="submit">Add Item</button>
+    </form>
+
+    <!-- Tabel untuk menampilkan item -->
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td>{{ item.name }}</td>
+                <td>{{ item.description }}</td>
+                <td>
+                    <form action="{{ url_for('update', id=item.id) }}" method="post" style="display:inline-block;">
+                        <input type="text" name="name" value="{{ item.name }}" required>
+                        <input type="text" name="description" value="{{ item.description }}">
+                        <button type="submit">Update</button>
+                    </form>
+                    <a href="{{ url_for('delete', id=item.id) }}">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
